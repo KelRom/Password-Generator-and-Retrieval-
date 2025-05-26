@@ -5,15 +5,15 @@ A password generator that will create a random unique password with no reoccurin
 
 ## Setup:
 - create a virtual enviornment: 
-	Linux: python3 -m venv venv
-	Windows: python -m venv venv
+	- Linux: python3 -m venv venv
+	- Windows: python -m venv venv
 - activate the virtual enviornment:
-	Linux: source venv/bin/activate
-	Windows: venv\scripts\activate 
+	- Linux: source venv/bin/activate
+	- Windows: venv\scripts\activate 
 - install requirements text:
-	Linux: pip3 install -r Requirements.txt 
-	Windows: pip install -r Requirements.txt
+	- Linux: pip3 install -r Requirements.txt 
+	- Windows: pip install -r Requirements.txt
 - run the program
-	Linux: python3 main.py
-	Windows: python main.py
+	- Linux: python3 main.py
+	- Windows: python main.py
  
