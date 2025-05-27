@@ -12,15 +12,15 @@ class PasswordManager:
     # Overrided this function in order to create only one instance of this class, which is a singleton, this is called before object is initialized
     # This is a static method, this is used for creating an object, which __init__ is used for initializing it
 
-    def __new__(cls):
+    def __new__(cls, should_use_special_characters: bool = True, password_length: int = 15, private_key=None):
         if cls.__instance is None:
             cls.__instance = super().__new__(cls)
         return cls.__instance
 
-    def __init__(self, should_use_special_characters: bool = True, password_length: int = 15, private_key=Fernet.generate_key()):
+    def __init__(self, should_use_special_characters: bool = True, password_length: int = 15, private_key=None):
         self.should_use_special_characters = should_use_special_characters
         self.password_length = password_length
-        self.private_key = private_key
+        self.private_key = Fernet.generate_key()
 
     # --------------------------------------------------------------------- PRIVATE METHODS ---------------------------------------------------------------------
 
