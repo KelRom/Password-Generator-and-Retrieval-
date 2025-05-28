@@ -45,16 +45,24 @@ class PasswordManager:
 
     # --------------------------------------------------------------------- PUBLIC METHODS ---------------------------------------------------------------------
 
-    def create_password(self) -> tuple[str, bytes]:
+    def create_password(self) -> tuple[str, str, str]:
+        """Returns the generated password, the encrypted password/token, and the private key
+            The private key is returned so that the user can store the private key and use it to get there passwords"""
         generated_password: str = self.__generate_password()
         salted_password: str = generated_password + self.__generate_salt()
         encrypted_password: bytes = self.__encrypt_password(salted_password)
-        return generated_password, encrypted_password
+        return generated_password, encrypted_password.decode(), self.private_key.decode()
 
     def decrypt_password(self, private_key: bytes, token: bytes):
-        decrypter = Fernet(private_key)
-        message = decrypter.decrypt(token).decode()
-        return message[:self.password_length]
+        try:
+            decrypter = Fernet(private_key)
+            message = decrypter.decrypt(token).decode()
+            return message[:self.password_length]
+        except:
+            return "Could not decrypt! this is not the correct private key or there is no password to decrypt"
 
     def set_private_key(self, private_key: bytes):
         self.private_key = private_key
+
+    def get_private_key(self):
+        return self.private_key
