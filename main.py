@@ -2,11 +2,10 @@ from tkinter import *
 from tkinter import ttk
 import password_manager
 import database_manager
-    
+
+
+        
 WINDOW_WIDTH, WINDOW_HEIGHT = 500, 500
-# Password Handler and Database handler
-pw_handle = password_manager.PasswordManager()
-db_handle = database_manager.Database_Manager()
 
 # Main Window Set up
 main_window = Tk()
@@ -33,7 +32,10 @@ username_label.grid(row=1, column=0, sticky="NE")
 password_label = ttk.Label(main_frame, text="Password: ", font=("Times", 15) )
 password_label.grid(row=1, column=0, sticky="E")
 
-# Username and Password Entry
+private_key_label = ttk.Label(main_frame, text="Private Key: ", font=("Times", 10) )
+private_key_label.grid(row=2, column=0, sticky="SE")
+
+# Username, Password, Private Key Entry
 username = StringVar()
 username_entry = ttk.Entry(main_frame, width=30, textvariable=username)
 username_entry.grid(row=1, column=1, sticky="NW")
@@ -41,9 +43,16 @@ username_entry.grid(row=1, column=1, sticky="NW")
 password = StringVar()
 password_entry = ttk.Entry(main_frame, width=30, textvariable=password)
 password_entry.grid(row=1, column=1, sticky="W")
+
+private_key = StringVar()
+private_key_entry = ttk.Entry(main_frame, width=30, textvariable=password)
+private_key_entry.grid(row=2, column=1, sticky="SW")
+
 username_entry.focus()
 
-
+# Password Handler and Database handler
+pw_handle = password_manager.PasswordManager()
+db_handle = database_manager.Database_Manager()
 # TODO: REMOVE THIS IS JUST FOR TESTING PURPOSES ------------------------------------------------------------
 
 password, encrypted_password, private_key = pw_handle.create_password()
