@@ -20,7 +20,11 @@ class PasswordManager:
     def __init__(self, should_use_special_characters: bool = True, password_length: int = 15, private_key=None):
         self.should_use_special_characters = should_use_special_characters
         self.password_length = password_length
-        self.private_key = Fernet.generate_key()
+        if private_key: 
+            self.private_key = private_key
+        else:
+            self.private_key = Fernet.generate_key()
+            
 
     # --------------------------------------------------------------------- PRIVATE METHODS ---------------------------------------------------------------------
 
@@ -45,10 +49,11 @@ class PasswordManager:
 
     # --------------------------------------------------------------------- PUBLIC METHODS ---------------------------------------------------------------------
 
-    def create_password(self) -> tuple[str, str, str]:
+    def create_password(self, enter_password=None) -> tuple[str, str, str]:
         """Returns the generated password, the encrypted password/token, and the private key
-            The private key is returned so that the user can store the private key and use it to get there passwords"""
-        generated_password: str = self.__generate_password()
+            The private key is returned so that the user can store the private key and use it to get there passwords
+            enter_password will be used if you have a password you are entering and it will encrypt and salt the password for you"""
+        generated_password: str = enter_password if enter_password else self.__generate_password()  
         salted_password: str = generated_password + self.__generate_salt()
         encrypted_password: bytes = self.__encrypt_password(salted_password)
         return generated_password, encrypted_password.decode(), self.private_key.decode()
