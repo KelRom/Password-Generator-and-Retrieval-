@@ -1,8 +1,48 @@
+from tkinter import *
+from tkinter import ttk
 import password_manager
 import database_manager
-
-pw_handle = password_manager.PasswordManager(True, 14)
+    
+WINDOW_WIDTH, WINDOW_HEIGHT = 500, 500
+# Password Handler and Database handler
+pw_handle = password_manager.PasswordManager()
 db_handle = database_manager.Database_Manager()
+
+# Main Window Set up
+main_window = Tk()
+main_window.title("Password Generator and Retriever")
+main_window.minsize(width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
+main_window.maxsize(width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
+main_window.columnconfigure(0, weight=1)
+main_window.rowconfigure(0, weight=1)
+
+# The main frame is where all of the other widgets will be placed on. 
+main_frame = ttk.Frame(main_window)
+main_frame.grid(column=0, row=0, sticky='NESW')
+main_frame.columnconfigure((0, 1, 2), weight=1)
+main_frame.rowconfigure(0, weight=2)
+main_frame.rowconfigure((1, 2), weight=1)
+
+# Labels
+title_lable = ttk.Label(main_frame, text="Password Generator and Retriever", font=("Times", 25))
+title_lable.grid(row=0, column=0, columnspan=3, sticky="")
+
+username_label = ttk.Label(main_frame, text="Username: ", font=("Times", 15))
+username_label.grid(row=1, column=0, sticky="NE")
+
+password_label = ttk.Label(main_frame, text="Password: ", font=("Times", 15) )
+password_label.grid(row=1, column=0, sticky="E")
+
+# Username and Password Entry
+username = StringVar()
+username_entry = ttk.Entry(main_frame, width=30, textvariable=username)
+username_entry.grid(row=1, column=1, sticky="NW")
+
+password = StringVar()
+password_entry = ttk.Entry(main_frame, width=30, textvariable=password)
+password_entry.grid(row=1, column=1, sticky="W")
+username_entry.focus()
+
 
 # TODO: REMOVE THIS IS JUST FOR TESTING PURPOSES ------------------------------------------------------------
 
@@ -28,3 +68,5 @@ pw_handle.set_private_key(b"RnM5x5wv_e-CFVjJirgKhFoDfflEa6RRUvrhKN6lNeA=")
 password = pw_handle.decrypt_password(pw_handle.get_private_key(), password.encode())
 print(username, password )
 # ------------------------------------------------------------------------------------------------------------
+
+main_window.mainloop()
