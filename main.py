@@ -7,6 +7,15 @@ WINDOW_WIDTH, WINDOW_HEIGHT = 500, 500
 
 def login(event):
     global pw_handle, db_handle
+    
+    # If name is empty or password is empty then ask to enter password and username 
+    # After name has been supplied check the database for a master password
+    # Once database has been checked see if a private key was supplied if a private key was supplied use it to go ahead and there is a master password, decrypt the password
+        # If password entered and password in the database match and the username entered and username in the database match then the login is successful
+        # Else let the user know that the username or password did not match and to please try again, or private key is incorrect
+    # If private key was not provided and there is a master ask them to input the private key
+    # If private key was not provided and there is no master, create an entry in the database with the username and password entered as the master
+    
     if private_Key.get():
         pw_handle = password_manager.PasswordManager(private_key=private_Key.get().encode())
         stored_username, stored_password = db_handle.retrieve_password("DB_MASTER", "N/A")
@@ -79,7 +88,7 @@ private_Key_entry.grid(row=2, column=1, sticky="SW")
 username_entry.focus()
 
 # Password Handler and Database handler
-pw_handle = password_manager.PasswordManager() #password_manager.PasswordManager()
+pw_handle = password_manager.PasswordManager()
 db_handle = database_manager.Database_Manager()
 
 main_window.bind("<Return>", login)
